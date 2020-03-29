@@ -608,9 +608,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd732fe81b8ba3042b6b19dac58fa596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 1502441815}
   speed: 6
-  jumpSpeed: 8
-  gravity: 20
+  jumpSpeed: 10
+  gravity: 2
 --- !u!143 &1502441815
 CharacterController:
   m_ObjectHideFlags: 0
