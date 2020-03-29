@@ -7,7 +7,7 @@ using System.Collections;
 // Make sure to attach a character controller to the same game object.
 // It is recommended that you make only one call to Move or SimpleMove per frame.
 
-public class ExampleClass : MonoBehaviour
+public class movement : MonoBehaviour
 {
     CharacterController characterController;
 
