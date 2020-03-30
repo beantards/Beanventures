@@ -5,27 +5,39 @@ public class movement : MonoBehaviour
 {
     public CharacterController controller;
 
-    public float speed = 6.0f;
-    public float jumpSpeed = 8.0f;
-    private Vector3 moveDirection = Vector3.zero;
-    public float gravity = 20f;
+    public float speed = 12f;
+    public float jumpHeight = 3f;
+    public float gravity = -9.81f;
 
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+
+    bool isGrounded;
+
+    Vector3 velocity;
 
     void Update()
     {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if(isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
 
         float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * y;
-        controller.Move(move * speed * Time.deltaTime);
-
-        /*if (controller.isGrounded && Input.GetButtonDown("Space"))
+        if(Input.GetButtonDown("Jump") && isGrounded)
         {
-            moveDirection.y = jumpSpeed;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-        */
+
+        Vector3 move = transform.right * x + transform.forward * z;
+        controller.Move(move * speed * Time.deltaTime);
+        velocity.y -= gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
     }
 }
