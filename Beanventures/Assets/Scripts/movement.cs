@@ -10,22 +10,22 @@ public class movement : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     public float gravity = 20f;
 
-
     void Update()
     {
-
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * y;
         controller.Move(move * speed * Time.deltaTime);
 
-        /*if (controller.isGrounded && Input.GetButtonDown("Space"))
+        if (controller.isGrounded)
         {
-            moveDirection.y = jumpSpeed;
+            if (Input.GetButtonDown("Jump"))
+            {
+                moveDirection.y = jumpSpeed;
+            }
         }
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-        */
+            moveDirection.y -= gravity * Time.deltaTime;
+            controller.Move(moveDirection * Time.deltaTime);
     }
 }
