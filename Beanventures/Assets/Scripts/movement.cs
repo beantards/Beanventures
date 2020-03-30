@@ -1,31 +1,46 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class movement : MonoBehaviour
+public class Movement : MonoBehaviour
 {
-    public CharacterController controller;
+    private CharacterController controller;
 
-    public float speed = 6.0f;
-    public float jumpSpeed = 8.0f;
-    private Vector3 moveDirection = Vector3.zero;
-    public float gravity = 20f;
+    private float moveSpeed = 5.0f;
+    private float verticalVelocity;
+    private float gravity = 0.4f;
+    private float jumpForce = 0.2f;
 
-    void Update()
+
+
+    // Start is called before the first frame update
+    private void Start()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        controller = GetComponent<CharacterController>();
+    }
 
-        Vector3 move = transform.right * x + transform.forward * y;
-        controller.Move(move * speed * Time.deltaTime);
-
+    private void Update()
+    {
         if (controller.isGrounded)
         {
-            if (Input.GetButtonDown("Jump"))
+            verticalVelocity = -gravity * Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                moveDirection.y = jumpSpeed;
+                verticalVelocity = jumpForce;
             }
         }
-            moveDirection.y -= gravity * Time.deltaTime;
-            controller.Move(moveDirection * Time.deltaTime);
+        else
+        {
+            verticalVelocity -= gravity * Time.deltaTime;
+        }
+        Vector3 moveVector = Vector3.zero;
+
+        float walkX = Input.GetAxis("Horizontal");
+        float walkZ = Input.GetAxis("Vertical");
+
+        moveVector += transform.right * walkX * moveSpeed * Time.deltaTime;
+        moveVector.y = verticalVelocity;
+        moveVector += transform.forward * walkZ * moveSpeed * Time.deltaTime;
+        controller.Move(moveVector);
     }
 }
