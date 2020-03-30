@@ -7,9 +7,14 @@ public class movement : MonoBehaviour
 
     public float speed = 6.0f;
     public float jumpSpeed = 8.0f;
-    private Vector3 moveDirection = Vector3.zero;
     public float gravity = 20f;
 
+    private Vector3 moveDirection = Vector3.zero;
+
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+    }
 
     void Update()
     {
@@ -20,12 +25,11 @@ public class movement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * y;
         controller.Move(move * speed * Time.deltaTime);
 
-        /*if (controller.isGrounded && Input.GetButtonDown("Space"))
-        {
-            moveDirection.y = jumpSpeed;
-        }
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-        */
+
+       if (Input.GetButton("Jump"))
+       {
+          moveDirection.y = jumpSpeed;
+       }
+
     }
 }
