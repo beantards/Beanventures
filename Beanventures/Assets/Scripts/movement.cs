@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Movement : MonoBehaviour
     private float moveSpeed = 5.0f;
     private float verticalVelocity;
     private float gravity = 0.4f;
-    private float jumpForce = 0.2f;
+    private float jumpForce = 0.1f;
 
 
 
@@ -43,4 +44,13 @@ public class Movement : MonoBehaviour
         moveVector += transform.forward * walkZ * moveSpeed * Time.deltaTime;
         controller.Move(moveVector);
     }
+
+    void OnTriggerEnter (Collider other)
+    {
+        if(other.CompareTag("Enemy"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
 }
+
