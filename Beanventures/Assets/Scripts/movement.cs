@@ -51,6 +51,11 @@ public class Movement : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        else if(other.CompareTag("Beans"))
+        {
+            //add beans
+            Destroy(other.gameObject);
+        }
     }
 }
 
